@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="Transform-DM-Conversation-XML.xsl"?>
+<conversation id="3923460862-5120705402">
+	<tweet id="893864064350400520" direction="received" timestamp="1501948774">
+		<sender id="3923460862" handle="@alice" name="Alice"/>
+		<content>Hi</content>
+	</tweet>
+	<tweet id="898573554387636227" direction="sent" timestamp="1503071604">
+		<sender id="5120705402" handle="@bob" name="Bob"/>
+		<quote id="898570804337692677">
+			<sender id="68126660" handle="@charlie" name="Charlie"/>
+			<content>How do you find Will Smith in the snow?&#x0A;&#x0A;Look for the fresh prints!</content>
+		</quote>
+		<content>Hilarious!</content>
+	</tweet>
+	<tweet id="899965527807868932" direction="received" timestamp="1503403477">
+		<sender id="3923460862" handle="@alice" name="Alice"/>
+		<content>
+			<img class="image" src="https://ton.twitter.com/1.1/ton/data/dm/899965527807868932/899965342197219328/zcQsnzv_.jpg"/><br/>I love this man.</content>
+	</tweet>
+	<tweet id="900772930564481027" direction="received" timestamp="1503595976">
+		<sender id="3923460862" handle="@alice" name="Alice"/>
+		<content>
+			<img class="sticker" src="https://ton.twimg.com/stickers/stickers/10484_raw.png"/>
+		</content>
+	</tweet>
+	<tweet id="914906264798298116" direction="sent" timestamp="1506837725">
+		<sender id="5120705402" handle="@bob" name="Bob"/>
+		<content>Feeling a bit down today. :(</content>
+	</tweet>
+	<tweet id="914906156505612292" direction="received" timestamp="1506965600">
+		<sender id="3923460862" handle="@alice" name="Alice"/>
+		<content>
+			<video class="video" controls="controls">
+				<source src="https://video.twimg.com/dm_gif/914906138952458240/usywe2NHCfLhvfo1SBp7Zes7Z5XNSBtLXPzglp9cf8GXtJiZeW.mp4" type="video/mp4"/>
+			</video>
+		</content>
+	</tweet>
+	<tweet id="893885091499319300" direction="sent" timestamp="1509895398">
+		<sender id="5120705402" handle="@bob" name="Bob"/>
+		<content>Thanks!</content>
+	</tweet>
+</conversation>
