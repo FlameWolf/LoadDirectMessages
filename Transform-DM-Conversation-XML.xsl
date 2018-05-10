@@ -14,12 +14,14 @@
 					ul.tweets > li.sent { float: right; }
 					div.tweet-header { padding: 5px; }
 					div.tweet-header, div.quote-header { color: #808080; font-size: smaller; }
-					div.quote-content, div.tweet-content { white-space: pre-line; }
 					div.tweet-content, div.sticker { padding: 5px; border-radius: 4px; }
-					div.tweet-content img.image { max-height: 250px; max-width: 250px; }
-					div.sticker img { max-height: 100px; max-width: 100px; }
-					ul.tweets > li.received div.tweet-content { background-color: #E6ECF0; }
-					ul.tweets > li.sent div.tweet-content { background-color: #1DA1F2; color: #FFFFFF; }
+					div.tweet-content > img.image { max-height: 250px; max-width: 250px; }
+					div.sticker > img { max-height: 100px; max-width: 100px; }
+					ul.tweets > li.received > div.tweet-content { background-color: #E6ECF0; }
+					ul.tweets > li.sent > div.tweet-content { background-color: #1DA1F2; color: #FFFFFF; }
+					ul.tweets > li.received > div.tweet-content > a { color: #1C94E0; text-decoration: none; }
+					ul.tweets > li.received > div.tweet-content > a:hover { text-decoration: underline; }
+					ul.tweets > li.sent > div.tweet-content > a { color: #FFFFFF; }
 					a.quote { display: block; border: solid 1px #F0F0F0; border-top-left-radius: 4px; border-top-right-radius: 4px; padding: 5px; text-decoration: none; color: #000000; }
 					a.quote:last-child { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
 					a.quote + div.tweet-content { border-top-left-radius: 0; border-top-right-radius: 0; }
