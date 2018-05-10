@@ -97,7 +97,7 @@ var loadDirectMessages = function() {
 						tweetHtml = `<img class="${attachedImageUrl.match(/^https:\/\/ton\.twimg\.com\/stickers\/stickers\//) ? "sticker" : "image"}" src="${attachedImageUrl}"/>${tweetHtml != EMPTY_STRING ? "<br/>" : EMPTY_STRING}${tweetHtml}`;
 					if(playableMedia != null)
 						tweetHtml = `<video class="video" controls="controls"><source src="${getVideoUrl(playableMedia)}" type="video/mp4"/></video>${tweetHtml != EMPTY_STRING ? "<br/>" : EMPTY_STRING}${tweetHtml}`;
-					return (`<tweet id="${tweetID}" direction="${tweetDirection}" timestamp="${tweetTimestamp}"><sender id="${tweetSenderID}" handle="${tweetSenderHandle}" name="${tweetSenderName}"/>${quotedTweet}<content>${tweetHtml}</content></tweet>`);
+					return (`<tweet id="${tweetID}" direction="${tweetDirection}" timestamp="${tweetTimestamp}"><sender id="${tweetSenderID}" handle="${tweetSenderHandle}" name="${tweetSenderName}"/>${quotedTweet}${tweetHtml != EMPTY_STRING ? "<content>" + tweetHtml + "</content>" : EMPTY_STRING}</tweet>`);
 				}
 				else
 					return tweetContainer.outerHTML;
