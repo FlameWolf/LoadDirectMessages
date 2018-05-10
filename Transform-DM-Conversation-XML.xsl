@@ -8,6 +8,7 @@
 				<title>DM Conversation</title>
 				<style type="text/css">
 					/*<![CDATA[*/
+					body { font-family: sans-serif; }
 					ul.tweets { list-style-type: none; }
 					ul.tweets > li { padding: 5px; width: 50%; clear: both; border-radius: 4px; margin: 5px; }
 					ul.tweets > li.received { float: left; }
