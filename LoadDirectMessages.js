@@ -35,8 +35,12 @@ var escapeHtml = function(unsafe) {
 };
 var currentElement = null;
 var emojoPic = null;
-var hashTagLink = null;
-var timeLineLink = null;
+var hashtagLink = null;
+var hashtagLinkText = EMPTY_STRING;
+var timelineLink = null;
+var timelineLinkUrl = EMPTY_STRING;
+var mentionLink = null;
+var mentionLinkText = EMPTY_STRING;
 var cleanUpHtml = function(element) {
 	currentElement = $(element);
 	currentElement.find(".Emoji").each(function(index, value) {
@@ -44,12 +48,19 @@ var cleanUpHtml = function(element) {
 		emojoPic.replaceWith(emojoPic.attr("alt"));
 	});
 	currentElement.find(".twitter-hashtag").each(function(index, value) {
-		hashTagLink = $(value);
-		hashTagLink.replaceWith(`<span class=\"hashtag\">${hashTagLink.text()}</span>`);
+		hashtagLink = $(value);
+		hashtagLinkText = hashtagLink.text();
+		hashtagLink.replaceWith(`<a class=\"hashtag\" href="https://twitter.com/hashtag/${hashtagLinkText.replace(/^#/, EMPTY_STRING)}" target="_blank">${hashtagLinkText}</a>`);
 	});
-	currentElement.find(".twitter-timeline-link").each(function(index, value) {
-		timeLineLink = $(value);
-		timeLineLink.html(timeLineLink.attr("data-expanded-url"));
+	currentElement.find(".twitter-timeline-link[data-expanded-url]").each(function(index, value) {
+		timelineLink = $(value);
+		timelineLinkUrl = timelineLink.data("expanded-url");
+		timelineLink.replaceWith(`<a class="hyperlink" href="${timelineLinkUrl}" target="_blank">${timelineLinkUrl}</a>`);
+	});
+	currentElement.find(".twitter-atreply").each(function(index, value) {
+		mentionLink = $(value);
+		mentionLinkText = mentionLink.text();
+		mentionLink.replaceWith(`<a class="at-mention" href="https://twitter.com/${mentionLinkText.replace(/^@/, EMPTY_STRING)}" target="_blank" data-user-id="${mentionLink.data("mentioned-user-id")}">${mentionLinkText}</a>`);
 	});
 	return element.innerHTML.replace(/&amp;/g, "&#x26;").replace(/&lt;/g, "&#x3C;").replace(/&gt;/g, "&#x3E;").replace(/&nbsp;/g, "&#xA0;").replace(/\n/g, "&#x0A;");
 };
@@ -79,8 +90,8 @@ var loadDirectMessages = function() {
 					if(quotedTweetContainer != null) {
 						quotedTweetID = quotedTweetContainer.querySelector(".QuoteTweet-innerContainer").getAttribute("data-item-id");
 						quotedTweetSenderID = quotedTweetContainer.querySelector(".QuoteTweet-innerContainer").getAttribute("data-user-id");
-						quotedTweetSenderName = escapeHtml(quotedTweetContainer.querySelector(".QuoteTweet-fullname").innerText);
-						quotedTweetSenderHandle = quotedTweetContainer.querySelector(".username").innerText;
+						quotedTweetSenderName = escapeHtml(quotedTweetContainer.querySelector(".QuoteTweet-fullname").textContent);
+						quotedTweetSenderHandle = quotedTweetContainer.querySelector(".username").textContent;
 						quotedTweetContent = quotedTweetContainer.querySelector(".QuoteTweet-text");
 						quotedTweet = (quotedTweetContent == null ? EMPTY_STRING : cleanUpHtml(quotedTweetContent));
 						if(quotedTweet != EMPTY_STRING)
@@ -100,7 +111,7 @@ var loadDirectMessages = function() {
 					return (`<tweet id="${tweetID}" direction="${tweetDirection}" timestamp="${tweetTimestamp}"><sender id="${tweetSenderID}" handle="${tweetSenderHandle}" name="${tweetSenderName}"/>${quotedTweet}${tweetHtml != EMPTY_STRING ? "<content>" + tweetHtml + "</content>" : EMPTY_STRING}</tweet>`);
 				}
 				else
-					return tweetContainer.outerHTML;
+					return `<tweet id="${tweetContainer.getAttribute("data-message-id")}"><content>${tweetContainer.textContent.trim().replace(/\s\s+/g, " ")}</content></tweet>`;
 			});
 			result = `${tweets.join(terminator)}${terminator}${result}`;
 		}
@@ -113,8 +124,9 @@ var loadDirectMessages = function() {
 			result = `<conversation id="${conversation_id}">${result}</conversation>`;
 			copy(result);
 			console.log("Done! XML data copied to clipboard.");
-			timeLineLink = null;
-			hashTagLink = null;
+			mentionLink = null;
+			timelineLink = null;
+			hashtagLink = null;
 			emojoPic = null;
 			currentElement = null;
 			quotedTweetContent = null;
