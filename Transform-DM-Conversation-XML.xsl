@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	<xsl:output method="html" encoding="UTF-8"/>
-	<xsl:strip-space elements="*"/>
 	<xsl:template match="conversation">
 		<html>
 			<head>
 				<title>DM Conversation</title>
 				<style type="text/css">
 					/*<![CDATA[*/
-					body { font-family: sans-serif; font-weight: normal; font-style: normal; text-decoration: none; background-color: #FFFFFF; color: #000000; }
-					ul.tweets { list-style-type: none; }
+					body { font-family: sans-serif; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; background-color: #FFFFFF; color: #000000; padding: 10px; }
+					ul.tweets { list-style-type: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; }
 					ul.tweets > li { padding: 5px; width: 50%; clear: both; border-radius: 4px; margin: 5px; }
-					ul.tweets > li.received { float: left; }
-					ul.tweets > li.sent { float: right; }
+					ul.tweets > li.received { align-self: flex-start; }
+					ul.tweets > li.sent { align-self: flex-end; }
+					ul.tweets > li.conversation-entry { background-color: #F4F4F4; text-align: center; }
 					div.tweet-header { padding: 5px; }
 					div.tweet-header, div.quote-header { color: #808080; font-size: smaller; }
+					ul.tweets > li.sent div.tweet-header { text-align: right; }
 					div.tweet-content, div.sticker { padding: 5px; border-radius: 4px; }
-					div.tweet-content > img.image { max-height: 250px; max-width: 250px; }
-					div.sticker > img { max-height: 100px; max-width: 100px; }
+					div.tweet-content, div.quote-content { white-space: pre-wrap; overflow-wrap: break-word; }
+					div.tweet-content > img.image { max-height: 100%; max-width: 100%; }
+					div.tweet-content > img.image + br { line-height: 2; }
+					div.sticker > img.sticker { max-height: 100px; max-width: 100px; }
 					ul.tweets > li.received > div.tweet-content { background-color: #E6ECF0; }
 					ul.tweets > li.sent > div.tweet-content { background-color: #1DA1F2; color: #FFFFFF; }
-					ul.tweets > li.received > div.tweet-content > a { color: #1C94E0; text-decoration: none; }
-					ul.tweets > li.received > div.tweet-content > a:hover { text-decoration: underline; }
-					ul.tweets > li.sent > div.tweet-content > a { color: #FFFFFF; text-decoration: underline; }
+					ul.tweets > li.received > div.tweet-content a, div.quote-content a { color: #1C94E0; text-decoration: none; }
+					ul.tweets > li.received > div.tweet-content a:hover, div.quote-content a:hover { text-decoration: underline; }
+					ul.tweets > li.sent > div.tweet-content a { color: #FFFFFF; text-decoration: underline; }
 					a.quote { display: block; border: solid 1px #F0F0F0; border-top-left-radius: 4px; border-top-right-radius: 4px; padding: 5px; text-decoration: none; color: #000000; }
 					a.quote:last-child { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
 					a.quote + div.tweet-content { border-top-left-radius: 0; border-top-right-radius: 0; }
-					ul.tweets > li.sent div.tweet-header { text-align: right; }
 					/*]]>*/
 				</style>
 				<script type="text/javascript">
@@ -51,12 +53,13 @@
 				</ul>
 				<script type="text/javascript">
 					/*<![CDATA[*/
+					var EMPTY_STRING = "";
 					[...document.querySelectorAll("a.quote")].map(function(value, index, array) {
 						var status = value.getAttribute("data-status-id");
 						var handle = value.querySelector("span.sender em.handle").innerText.replace(/^@/, "");
 						value.href = `https://twitter.com/${handle}/status/${status}`;
 					});
-					[...document.querySelectorAll("span.time")].map(x => x.innerHTML = formatDate(new Date(parseInt(x.getAttribute("data-timestamp")) * 1000)));
+					[...document.querySelectorAll("span.time")].map(x => { x.innerHTML = formatDate(new Date(parseInt(x.getAttribute("data-timestamp")) * 1000)); });
 					/*]]>*/
 				</script>
 			</body>
@@ -67,15 +70,24 @@
 			<xsl:attribute name="class">
 				<xsl:value-of select="@direction"/>
 			</xsl:attribute>
-			<div class="tweet-header">
-				<xsl:apply-templates select="sender"/>
-				<xsl:text>&#xA0;</xsl:text>
-				<span class="time">
-					<xsl:attribute name="data-timestamp">
-						<xsl:value-of select="@timestamp"/>
+			<xsl:choose>
+				<xsl:when test="sender">
+					<div class="tweet-header">
+						<xsl:apply-templates select="sender"/>
+						<xsl:text>&#xA0;</xsl:text>
+						<span class="time">
+							<xsl:attribute name="data-timestamp">
+								<xsl:value-of select="@timestamp"/>
+							</xsl:attribute>
+						</span>
+					</div>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:attribute name="class">
+						<xsl:text>conversation-entry</xsl:text>
 					</xsl:attribute>
-				</span>
-			</div>
+				</xsl:otherwise>
+			</xsl:choose>
 			<xsl:apply-templates select="quote"/>
 			<xsl:if test="content != '' or content/node()">
 				<div class="tweet-content">
