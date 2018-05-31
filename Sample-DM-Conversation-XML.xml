@@ -1,43 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="Transform-DM-Conversation-XML.xsl"?>
-<conversation id="3923460862-5120705402">
-	<tweet id="893864064350400520" direction="received" timestamp="1501948774">
-		<sender id="3923460862" handle="@alice" name="Alice"/>
-		<content>Hi</content>
+<conversation id="2650075210-3923320813">
+	<tweet id="983864063450400502" direction="received" timestamp="1501948774">
+		<sender id="2650075210" handle="@alice" name="Alice"/>
+		<content>Hi!</content>
 	</tweet>
-	<tweet id="898573554387636227" direction="sent" timestamp="1503071604">
-		<sender id="5120705402" handle="@bob" name="Bob"/>
-		<quote id="898570804337692677">
-			<sender id="68126660" handle="@charlie" name="Charlie"/>
+	<tweet id="983864063450400512" direction="sent" timestamp="1501948854">
+		<sender id="3923320813" handle="@bob" name="Bob"/>
+		<attachment type="tweet" tweet-id="988570804373692767">
+			<sender id="76656606" handle="@carol" name="Carol"/>
 			<content>How do you find Will Smith in the snow?&#x0A;&#x0A;Look for the fresh prints!</content>
-		</quote>
-		<content>Hilarious!</content>
+		</attachment>
+		<content>Oh hey. Did you see Carol's tweet?</content>
 	</tweet>
-	<tweet id="899965527807868932" direction="received" timestamp="1503403477">
-		<sender id="3923460862" handle="@alice" name="Alice"/>
-		<content>
-			<img class="image" src="https://ton.twitter.com/1.1/ton/data/dm/899965527807868932/899965342197219328/zcQsnzv_.jpg"/><br/>I love this man.</content>
+	<tweet id="983864063450400517" direction="received" timestamp="1501948888">
+		<sender id="2650075210" handle="@alice" name="Alice"/>
+		<attachment type="sticker" url="https://ton.twimg.com/stickers/stickers/22698_raw.png"/>
 	</tweet>
-	<tweet id="900772930564481027" direction="received" timestamp="1503595976">
-		<sender id="3923460862" handle="@alice" name="Alice"/>
-		<content>
-			<img class="sticker" src="https://ton.twimg.com/stickers/stickers/10484_raw.png"/>
-		</content>
+	<tweet id="983864063450400584" direction="sent" timestamp="1501948919">
+		<sender id="3923320813" handle="@bob" name="Bob"/>
+		<attachment type="hyperlink" url="https://t.co/8nqB1UDRUs"/>
+		<content><a class="hashtag" href="https://twitter.com/hashtag/NowPlaying" target="_blank">#NowPlaying</a></content>
 	</tweet>
-	<tweet id="914906264798298116" direction="sent" timestamp="1506837725">
-		<sender id="5120705402" handle="@bob" name="Bob"/>
-		<content>Feeling a bit down today. :(</content>
+	<tweet id="983864063450400598" direction="received" timestamp="1501948937">
+		<sender id="2650075210" handle="@alice" name="Alice"/>
+		<attachment type="video" url="https://video.twimg.com/dm_gif/998848005070442496/kwZzw9g3u8sudLgVaT_sQyTOABTPJb1efqWX6e_VydEEPLLT1I.mp4"/>
+		<content>I love the song! 😌</content>
 	</tweet>
-	<tweet id="914906156505612292" direction="received" timestamp="1506965600">
-		<sender id="3923460862" handle="@alice" name="Alice"/>
-		<content>
-			<video class="video" controls="controls">
-				<source src="https://video.twimg.com/dm_gif/914906138952458240/usywe2NHCfLhvfo1SBp7Zes7Z5XNSBtLXPzglp9cf8GXtJiZeW.mp4" type="video/mp4"/>
-			</video>
-		</content>
+	<tweet id="983864063450400650" direction="sent" timestamp="1501948983">
+		<sender id="3923320813" handle="@bob" name="Bob"/>
+		<attachment type="image" url="https://i.imgur.com/yh02fgk.jpg"/>
+		<content>Cute puppies.</content>
 	</tweet>
-	<tweet id="893885091499319300" direction="sent" timestamp="1509895398">
-		<sender id="5120705402" handle="@bob" name="Bob"/>
-		<content>Thanks!</content>
+	<tweet id="983864063450400821" direction="received" timestamp="1501949005">
+		<sender id="2650075210" handle="@alice" name="Alice"/>
+		<content>Awwwwwwwwww. 😍😚</content>
+	</tweet>
+	<tweet id="983864063450400840" direction="sent" timestamp="1501949051">
+		<sender id="3923320813" handle="@bob" name="Bob"/>
+		<attachment type="hyperlink" url="https://t.co/VFgWZnZYOp"/>
+	</tweet>
+	<tweet id="983864063450400845" direction="received" timestamp="1501949069">
+		<sender id="2650075210" handle="@alice" name="Alice"/>
+		<content>Ha ha. 😂</content>
+	</tweet>
+	<tweet id="983864063450400864" direction="sent" timestamp="1501949080">
+		<sender id="3923320813" handle="@bob" name="Bob"/>
+		<attachment type="video" url="https://video.twimg.com/dm_video/1001781861067079680/vid/640x360/Cc25f3M8mUtntZWdqG3uvcIcolScEHwnUyb2dWQJWB8.mp4"/>
+		<content><a class="hashtag" href="https://twitter.com/hashtag/OddlySatisfying" target="_blank">#OddlySatisfying</a></content>
+	</tweet>
+	<tweet id="983864063450400873" direction="received" timestamp="1501949088">
+		<sender id="2650075210" handle="@alice" name="Alice"/>
+		<attachment type="tweet" tweet-id="901104395202472723">
+			<sender id="295272321" handle="@dan" name="Dan"/>
+			<content>My wife left me because I'm insecure and paranoid.&#x0A;&#x0A;&#x0A;Wait. Never mind. She was just getting the mail.</content>
+		</attachment>
+	</tweet>
+	<tweet id="983864063450400898" direction="sent" timestamp="1501949125">
+		<sender id="3923320813" handle="@bob" name="Bob"/>
+		<attachment type="sticker" url="https://ton.twimg.com/stickers/stickers/10004_raw.png"/>
+	</tweet>
+	<tweet id="983864063450400911" direction="sent" timestamp="1501949142">
+		<sender id="3923320813" handle="@bob" name="Bob"/>
+		<content>Ha ha. I wonder how he comes up with stuff like this!</content>
+	</tweet>
+	<tweet id="983864063450400924" direction="received" timestamp="1501949157">
+		<sender id="2650075210" handle="@alice" name="Alice"/>
+		<attachment type="hyperlink" url="https://t.co/TV2cv6V0zP"/>
+	</tweet>
+	<tweet id="983864063450400937" direction="received" timestamp="1501949171">
+		<sender id="2650075210" handle="@alice" name="Alice"/>
+		<content>I think he steals from them here. 😆</content>
+	</tweet>
+	<tweet id="983864063450400988" direction="sent" timestamp="1501949195">
+		<sender id="3923320813" handle="@bob" name="Bob"/>
+		<attachment type="image" url="https://i.imgur.com/a5RnDd5.jpg"/>
 	</tweet>
 </conversation>
