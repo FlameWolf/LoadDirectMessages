@@ -8,7 +8,7 @@
 				<style type="text/css">
 					/*<![CDATA[*/
 					* { box-sizing: border-box; }
-					body { font-family: sans-serif; font-size: 12pt; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; background-color: #FFFFFF; color: #000000; min-width: 540pt; padding: 10pt; }
+					body { font-family: sans-serif; font-size: 12pt; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; background-color: #FFFFFF; color: #000000; min-width: 540pt; max-width: 1080pt; padding: 10pt; margin: 0 auto; }
 					ul.tweets { list-style-type: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; }
 					ul.tweets > li { width: 50%; padding: 5pt; border-radius: 4pt; margin: 5pt; }
 					ul.tweets > li.conversation-entry { background-color: #F4F4F4; text-align: center; margin: 50pt auto; }
