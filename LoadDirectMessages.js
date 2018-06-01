@@ -39,20 +39,24 @@ var conversationJoinEntry = null;
 var userProfileLink = null;
 var userProfileImage = null;
 var videoTweetIDs = [];
+HTMLElement.prototype.replaceWith = function(html) {
+	this.insertAdjacentHTML("afterend", html);
+	this.remove();
+};
 var escapeHtml = function(unsafe) {
 	return unsafe.replace(/&/g, "&#x26;").replace(/</g, "&#x3C;").replace(/>/g, "&#x3E;").replace(/"/g, "&#x22;").replace(/'/g, "&#x27;");
 };
 var cleanUpHtml = function(element) {
 	[...element.querySelectorAll(".twitter-hashtag")].map(function(value) {
 		hashtagLinkText = value.textContent;
-		$(value).replaceWith(`<a class=\"hashtag\" href="https://twitter.com/hashtag/${hashtagLinkText.replace(/^#/, EMPTY_STRING)}" target="_blank">${hashtagLinkText}</a>`);
+		value.replaceWith(`<a class=\"hashtag\" href="https://twitter.com/hashtag/${hashtagLinkText.replace(/^#/, EMPTY_STRING)}" target="_blank">${hashtagLinkText}</a>`);
 	});
 	[...element.querySelectorAll(".twitter-timeline-link[data-expanded-url]")].map(function(value) {
 		timelineLinkURL = value.getAttribute("data-expanded-url");
-		$(value).replaceWith(`<a href="${timelineLinkURL}" target="_blank">${timelineLinkURL}</a>`);
+		value.replaceWith(`<a href="${timelineLinkURL}" target="_blank">${timelineLinkURL}</a>`);
 	});
 	[...element.querySelectorAll(".twitter-atreply")].map(function(value) {
-		$(value).replaceWith(`<a class="mention" href="${value.href}" target="_blank" data-user-id="${value.getAttribute("data-mentioned-user-id")}">${value.textContent}</a>`);
+		value.replaceWith(`<a class="mention" href="${value.href}" target="_blank" data-user-id="${value.getAttribute("data-mentioned-user-id")}">${value.textContent}</a>`);
 	});
 	if(element.classList.contains("DMConversationEntry")) {
 		conversationEntryHtml = element.firstChild.textContent.trim();
