@@ -39,7 +39,7 @@ var conversationJoinEntry = null;
 var userProfileLink = null;
 var userProfileImage = null;
 var videoTweetIDs = [];
-HTMLElement.prototype.replaceWith = function(html) {
+Element.prototype.replaceWith = function(html) {
 	this.insertAdjacentHTML("afterend", html);
 	this.remove();
 };
@@ -63,7 +63,7 @@ var cleanUpHtml = function(element) {
 		conversationJoinEntry = element.querySelector(".DMConversationJoinEntry");
 		if(conversationJoinEntry != null) {
 			conversationEntryHtml += `<br/>${conversationJoinEntry.querySelector(".DMConversationJoinEntry-message").textContent.trim()}<br/><span class="members">`;
-			[...conversationJoinEntry.querySelectorAll(".DMConversationJoinEntry-avatar")].map(function(value, index, source) {
+			[...conversationJoinEntry.querySelectorAll(".DMConversationJoinEntry-avatar")].map(function(value) {
 				userProfileLink = value.querySelector("[class$=\"user-profile-link\"]");
 				userProfileImage = value.querySelector(".DMAvatar-image");
 				conversationEntryHtml += `<a class="avatar" href="${userProfileLink.href}" title="${userProfileImage.title}" target="_blank" data-user-id="${userProfileLink.getAttribute("data-user-id")}"><img src="${userProfileImage.src}"/></a>`;
@@ -103,20 +103,29 @@ var fixVideoURLs = function(items) {
 		});
 	}
 };
-var copyResultToClipboard = function() {
-	var textArea = document.createElement("textArea");
-	textArea.setAttribute("readonly", true);
-	textArea.value = result;
-	document.body.appendChild(textArea);
-	textArea.select();
-	document.execCommand("copy");
-	console.log("Done! XML data copied to clipboard.");
-	document.body.removeChild(textArea);
-	textArea = null;
+var saveXMLFile = function() {
+	result = `<?xml version="1.0" encoding="UTF-8"?>\n${result}`;
+	var xmlFile = new Blob([result], { type: "text/xml" });
+	var anchorElement = document.createElement("a");
+	var anchorElementStyle = anchorElement.style;
+	anchorElement.href = URL.createObjectURL(xmlFile);
+	anchorElement.download = `dm-conversation-${conversationID}`;
+	anchorElementStyle.display = "none";
+	anchorElementStyle.visibility = "hidden";
+	anchorElementStyle.opacity = 0;
+	document.body.appendChild(anchorElement);
+	anchorElement.click();
+	setTimeout(function() {
+		URL.revokeObjectURL(anchorElement.href);
+		document.body.removeChild(anchorElement);
+		anchorElement = null;
+		xmlFile = null;
+		result = EMPTY_STRING;
+	}, 0);
 };
 var finish = function() {
 	result = `<conversation id="${conversationID}">${result}</conversation>`;
-	copyResultToClipboard();
+	saveXMLFile();
 	videoTweetIDs = null;
 	userProfileImage = null;
 	userProfileLink = null;
