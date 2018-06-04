@@ -8,8 +8,8 @@ Get an archive of all the messages from a Twitter DM conversation.
 
 *(The function will stop executing when it gets to the very first message in the conversation. Each time the function reads a batch of messages, you will get an error message saying `SyntaxError: unexpected token: ':'` (or something else similar, depending on your browser) which can be ignored. It indicates that the function is working properly. You'll know that the job is complete when the error messages stop appearing. You can run the command ``​`size: ${result.length/1000000} MB; time: ${new Date(parseInt(tweetTimestamp)*1000)}`;​`` during execution to see the size of the archive in MB as well as the send/recieved time of the oldest message archived. If you run this command twice and the result is the same, the function has stopped executing.)*
 
-5. Run the following command to copy the archive into clipboard: `copy(result);`.
-6. You can save the XML file and use **Transform-DM-Conversation-XML.xsl** to transform it into HTML format for presentation. See **Sample-DM-Conversation-XML.xml** for an example.
+5. You will be prompted to save the output file to your desired location. Click **Save**.
+6. You can use **Transform-DM-Conversation-XML.xsl** to transform the output XML file into HTML format for presentation. See **Sample-DM-Conversation-XML.xml** for an example.
 ## Known issues
 If you have videos in your chat (not animated GIFs that Twitter converts to MP4 format, but any other kind of videos), then this script will fail to load their URLs properly. This can be fixed in Chrome by following the below steps before running the script.
 * Install the [Disable Content-Security-Policy](https://chrome.google.com/webstore/detail/disable-content-security/ieelmcmcagommplceebfedjlakkhpden) extension.
