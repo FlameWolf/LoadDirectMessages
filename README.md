@@ -6,7 +6,7 @@ Get an archive of all the messages from a Twitter DM conversation.
 3. Replace the string `<<CONVERSATION-ID-GOES-HERE>>` with the ID of the conversation that you want to archive. (See [this guide by @Mincka](https://github.com/Mincka/DMArchiver#how-to-get-a-conversation_id) to find out how to get the conversation ID.)
 4. Press `Enter` and the script will start archiving the messages in your DM conversation.
 
-*(The script will stop executing when it gets to the very first message in the conversation. Each time the script reads a batch of messages, you will get an error message saying `SyntaxError: unexpected token: ':'` (or something else similar, depending on your browser) which can be ignored. It indicates that the function is working properly. You'll know that the job is complete when the error messages stop.)*
+*(The script will stop executing when it gets to the very first message in the conversation. Each time the script reads a batch of messages, you will get an error message saying `SyntaxError: unexpected token: ':'` (or something else similar, depending on your browser) which can be ignored. It indicates that the script is working properly.)*
 
 5. Once the task is complete, you will be prompted to save the output file to your desired location. Click **Save**.
 6. You can use **Transform-DM-Conversation-XML.xsl** to transform the output XML file into HTML format for presentation. See **Sample-DM-Conversation-XML.xml** for an example.
