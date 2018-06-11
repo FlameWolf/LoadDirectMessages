@@ -46,18 +46,20 @@
 				</style>
 				<script type="text/javascript">
 					/*<![CDATA[*/
-					var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-					var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-					var formatDate = function(date) {
-						return (days[date.getDay()] + " "
-							+ date.getDate().toString().padStart(2, "0") + " "
-							+ months[date.getMonth()] + " "
-							+ date.getFullYear() + " "
-							+ date.getHours().toString().padStart(2, "0") + ":"
-							+ date.getMinutes().toString().padStart(2, "0") + ":"
-							+ date.getSeconds().toString().padStart(2, "0"));
-					};
-					var openTweetWindow = function(event) {
+					const formatDate = (function() {
+						const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+						const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+						return function(date) {
+							return (days[date.getDay()] + " "
+								+ date.getDate().toString().padStart(2, "0") + " "
+								+ months[date.getMonth()] + " "
+								+ date.getFullYear() + " "
+								+ date.getHours().toString().padStart(2, "0") + ":"
+								+ date.getMinutes().toString().padStart(2, "0") + ":"
+								+ date.getSeconds().toString().padStart(2, "0"));
+						};
+					})();
+					const openTweetWindow = function(event) {
 						if(event.target.nodeName.toUpperCase() != "A")
 							window.open(this.getAttribute("data-url"));
 					};
@@ -120,7 +122,7 @@
 					</xsl:attribute>
 					<xsl:attribute name="data-url">
 						<xsl:text>https://twitter.com/</xsl:text>
-						<xsl:value-of select="substring(sender/@handle, 2)"/>
+						<xsl:value-of select="sender/@handle"/>
 						<xsl:text>/status/</xsl:text>
 						<xsl:value-of select="@tweet-id"/>
 					</xsl:attribute>
@@ -173,6 +175,7 @@
 			</strong>
 			<xsl:text>&#xA0;</xsl:text>
 			<em class="handle">
+				<xsl:text>@</xsl:text>
 				<xsl:value-of select="@handle"/>
 			</em>
 		</span>
