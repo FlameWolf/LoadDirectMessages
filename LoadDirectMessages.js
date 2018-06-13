@@ -228,4 +228,5 @@
 		});
 	};
 	loadDirectMessages();
+	const timer = setInterval(() => (ajaxResponse != null ? console.clear() : clearInterval(timer)), 15000);
 })();
