@@ -59,12 +59,13 @@
 			hashtagLinkText = value.textContent;
 			value.replaceWith(`<a class=\"hashtag\" href="https://twitter.com/hashtag/${hashtagLinkText.replace(/^#/, EMPTY_STRING)}" target="_blank">${hashtagLinkText}</a>`);
 		});
-		[...element.querySelectorAll(".twitter-timeline-link[data-expanded-url]")].map(function(value) {
-			timelineLinkURL = value.getAttribute("data-expanded-url");
+		[...element.querySelectorAll(".twitter-timeline-link")].map(function(value) {
+			timelineLinkURL = (value.getAttribute("data-expanded-url") || `https://${value.textContent}`);
 			value.replaceWith(`<a href="${timelineLinkURL}" target="_blank">${timelineLinkURL}</a>`);
 		});
 		[...element.querySelectorAll(".twitter-atreply")].map(function(value) {
-			value.replaceWith(`<a class="mention" href="${value.href}" target="_blank" data-user-id="${value.getAttribute("data-mentioned-user-id")}">${value.textContent}</a>`);
+			mentionLinkText = value.textContent;
+			value.replaceWith(`<a class="mention" href="https://twitter.com/${mentionLinkText.replace(/^@/, EMPTY_STRING)}" target="_blank" data-user-id="${value.getAttribute("data-mentioned-user-id")}">${mentionLinkText}</a>`);
 		});
 		if(element.classList.contains("DMConversationEntry")) {
 			conversationEntryHtml = element.firstChild.textContent.trim();
@@ -88,28 +89,6 @@
 		else {
 			videoTweetIDs.push(tweetID);
 			return `\${vid:${tweetID}}`;
-		}
-	};
-	const fixVideoURLs = function(items) {
-		if(items.length == 0)
-			finish();
-		else {
-			items.map(function(value) {
-				let xhr = new XMLHttpRequest();
-				xhr.open("GET", `https://mobile.twitter.com/messages/media/${value}`);
-				xhr.setRequestHeader("Accept", "text/html, application/xhtml+xml, application/xml; q=0.9, */*; q=0.8");
-				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				xhr.onreadystatechange = function() {
-					if(xhr.readyState == XMLHttpRequest.DONE) {
-						result = result.replace(new RegExp(`(<attachment type="video" url=")(\\\${vid:${value}})("/>)`), `$1${(xhr.status == 200 ? xhr.responseURL : xhr.requestURL)}$3`);
-						items.splice(items.indexOf(value), 1);
-						if(items.length == 0)
-							finish();
-						xhr = null;
-					}
-				};
-				xhr.send();
-			});
 		}
 	};
 	const saveXMLFile = function() {
@@ -152,6 +131,28 @@
 		itemsAsJson = null;
 		ajaxResponse = null;
 	};
+	const fixVideoURLs = function(items) {
+		if(items.length == 0)
+			finish();
+		else {
+			items.map(function(value) {
+				let xhr = new XMLHttpRequest();
+				xhr.open("GET", `https://mobile.twitter.com/messages/media/${value}`);
+				xhr.setRequestHeader("Accept", "text/html, application/xhtml+xml, application/xml; q=0.9, */*; q=0.8");
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhr.onreadystatechange = function() {
+					if(xhr.readyState == XMLHttpRequest.DONE) {
+						result = result.replace(new RegExp(`(<attachment type="video" url=")(\\\${vid:${value}})("/>)`), `$1${(xhr.status == 200 ? xhr.responseURL : xhr.requestURL)}$3`);
+						items.splice(items.indexOf(value), 1);
+						if(items.length == 0)
+							finish();
+						xhr = null;
+					}
+				};
+				xhr.send();
+			});
+		}
+	};
 	const loadDirectMessages = function() {
 		$.ajax(conversationURL).done(function(response) {
 			ajaxResponse = JSON.parse(response);
@@ -162,7 +163,7 @@
 					tweetContainer = $.parseHTML(value)[0];
 					if(tweetContainer.classList.contains("DirectMessage")) {
 						tweetID = tweetContainer.getAttribute("data-item-id");
-						tweetDirection = (tweetContainer.classList.contains("DirectMessage--sent") ? "sent" : "received");
+						tweetDirection = (tweetContainer.classList.contains("DirectMessage--sent") ? "0" : "1");
 						tweetSenderID = tweetContainer.getAttribute("data-sender-id");
 						tweetSenderName = tweetContainer.querySelector(".DMAvatar-image").title;
 						tweetSenderHandle = tweetContainer.querySelector(".js-user-profile-link").getAttribute("href").replace(/^\//, EMPTY_STRING);
@@ -172,15 +173,15 @@
 						imageContainer = tweetContainer.querySelector(".dm-attached-media");
 						videoContainer = tweetContainer.querySelector(".PlayableMedia");
 						quotedTweetContainer = tweetContainer.querySelector(".QuoteTweet");
-						tweetHtml = (tweetContent == null ? EMPTY_STRING : cleanUpHtml(tweetContent));
+						tweetHtml = (tweetContent == null ? EMPTY_STRING : cleanUpHtml(tweetContent).trim());
 						if(quotedTweetContainer != null) {
 							attachmentType = "tweet";
 							quotedTweetID = quotedTweetContainer.querySelector(".QuoteTweet-innerContainer").getAttribute("data-item-id");
 							quotedTweetSenderID = quotedTweetContainer.querySelector(".QuoteTweet-innerContainer").getAttribute("data-user-id");
-							quotedTweetSenderName = escapeHtml(quotedTweetContainer.querySelector(".QuoteTweet-fullname").textContent);
+							quotedTweetSenderName = escapeHtml(quotedTweetContainer.querySelector(".QuoteTweet-fullname").textContent.trim());
 							quotedTweetSenderHandle = quotedTweetContainer.querySelector(".username > b").textContent;
 							quotedTweetContent = quotedTweetContainer.querySelector(".QuoteTweet-text");
-							quotedTweetHtml = (quotedTweetContent == null ? EMPTY_STRING : cleanUpHtml(quotedTweetContent));
+							quotedTweetHtml = (quotedTweetContent == null ? EMPTY_STRING : cleanUpHtml(quotedTweetContent).trim());
 						}
 						else if(hyperlinkContainer != null) {
 							attachmentType = "hyperlink";
