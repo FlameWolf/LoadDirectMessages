@@ -72,8 +72,8 @@
 				</ul>
 				<script type="text/javascript">
 					/*<![CDATA[*/
-					[...document.querySelectorAll("span.time")].map(x => x.innerHTML = formatDate(new Date(parseInt(x.getAttribute("data-timestamp")) * 1000)));
-					[...document.querySelectorAll("div.quote")].map(x => x.addEventListener("click", openTweetWindow));
+					[...document.querySelectorAll("span.time")].map(x => setTimeout((() => x.innerHTML = formatDate(new Date(parseInt(x.getAttribute("data-timestamp")) * 1000))), 0));
+					[...document.querySelectorAll("div.quote")].map(x => setTimeout((x.addEventListener("click", openTweetWindow)), 0));
 					/*]]>*/
 				</script>
 			</body>
@@ -82,26 +82,29 @@
 	<xsl:template match="tweet">
 		<li>
 			<xsl:attribute name="class">
-				<xsl:value-of select="@direction"/>
-			</xsl:attribute>
-			<xsl:choose>
-				<xsl:when test="@direction">
-					<div class="tweet-header">
-						<xsl:apply-templates select="sender"/>
-						<xsl:text>&#xA0;</xsl:text>
-						<span class="time">
-							<xsl:attribute name="data-timestamp">
-								<xsl:value-of select="@timestamp"/>
-							</xsl:attribute>
-						</span>
-					</div>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:attribute name="class">
+				<xsl:choose>
+					<xsl:when test="@direction = '0'">
+						<xsl:text>sent</xsl:text>
+					</xsl:when>
+					<xsl:when test="@direction = '1'">
+						<xsl:text>received</xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
 						<xsl:text>conversation-entry</xsl:text>
-					</xsl:attribute>
-				</xsl:otherwise>
-			</xsl:choose>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:attribute>
+			<xsl:if test="sender">
+				<div class="tweet-header">
+					<xsl:apply-templates select="sender"/>
+					<xsl:text>&#xA0;</xsl:text>
+					<span class="time">
+						<xsl:attribute name="data-timestamp">
+							<xsl:value-of select="@timestamp"/>
+						</xsl:attribute>
+					</span>
+				</div>
+			</xsl:if>
 			<xsl:apply-templates select="attachment"/>
 			<xsl:if test="content">
 				<div class="tweet-content">
