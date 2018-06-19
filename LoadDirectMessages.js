@@ -28,6 +28,7 @@
 	let quotedTweetID = EMPTY_STRING;
 	let quotedTweetSenderID = EMPTY_STRING;
 	let quotedTweetSenderHandle = EMPTY_STRING;
+	let quotedTweetSenderNameContainer = null;
 	let quotedTweetSenderName = EMPTY_STRING;
 	let quotedTweetContent = null;
 	let quotedTweetHtml = EMPTY_STRING;
@@ -120,6 +121,7 @@
 		userProfileLink = null;
 		conversationJoinEntry = null;
 		quotedTweetContent = null;
+		quotedTweetSenderNameContainer = null;
 		quotedTweetContainer = null;
 		tweetContainer = null;
 		videoContainer = null;
@@ -178,7 +180,9 @@
 							attachmentType = "tweet";
 							quotedTweetID = quotedTweetContainer.querySelector(".QuoteTweet-innerContainer").getAttribute("data-item-id");
 							quotedTweetSenderID = quotedTweetContainer.querySelector(".QuoteTweet-innerContainer").getAttribute("data-user-id");
-							quotedTweetSenderName = escapeHtml(quotedTweetContainer.querySelector(".QuoteTweet-fullname").textContent.trim());
+							quotedTweetSenderNameContainer = quotedTweetContainer.querySelector(".QuoteTweet-fullname");
+							[...quotedTweetSenderNameContainer.querySelectorAll(".Emoji")].map(x => x.remove());
+							quotedTweetSenderName = escapeHtml(quotedTweetSenderNameContainer.textContent);
 							quotedTweetSenderHandle = quotedTweetContainer.querySelector(".username > b").textContent;
 							quotedTweetContent = quotedTweetContainer.querySelector(".QuoteTweet-text");
 							quotedTweetHtml = (quotedTweetContent == null ? EMPTY_STRING : cleanUpHtml(quotedTweetContent).trim());
