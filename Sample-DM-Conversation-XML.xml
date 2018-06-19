@@ -29,8 +29,8 @@
 	</tweet>
 	<tweet id="983864063450400650" direction="sent" timestamp="1501948983">
 		<sender id="3923320813" handle="bob" name="Bob"/>
-		<attachment type="image" url="https://i.imgur.com/yh02fgk.jpg"/>
-		<content>Cute puppies.</content>
+		<attachment type="image" url="https://pbs.twimg.com/media/DYyEuENWsAAOi_g.jpg"/>
+		<content>Cute puppy.</content>
 	</tweet>
 	<tweet id="983864063450400821" direction="received" timestamp="1501949005">
 		<sender id="2650075210" handle="alice" name="Alice"/>
@@ -74,6 +74,6 @@
 	</tweet>
 	<tweet id="983864063450400988" direction="sent" timestamp="1501949195">
 		<sender id="3923320813" handle="bob" name="Bob"/>
-		<attachment type="image" url="https://i.imgur.com/a5RnDd5.jpg"/>
+		<attachment type="image" url="https://pbs.twimg.com/media/Df_0TqwX0AIJoiv.jpg"/>
 	</tweet>
 </conversation>
