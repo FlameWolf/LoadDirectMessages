@@ -1,12 +1,12 @@
-(function() {
-	"use strict";
+"use strict";
+const loadDirectMessages = (function() {
 	const EMPTY_STRING = "";
 	let result = EMPTY_STRING;
 	let max_entry_id = -1;
 	let ajaxResponse = null;
-	const conversationID = "<<CONVERSATION-ID-GOES-HERE>>";
-	const baseURL = `https://twitter.com/messages/with/conversation?id=${conversationID}`;
-	let conversationURL = baseURL;
+	let conversationID = EMPTY_STRING;
+	let baseURL = EMPTY_STRING;
+	let conversationURL = EMPTY_STRING;
 	let itemsAsJson = null;
 	let tweets = [];
 	let tweetContainer = null;
@@ -116,7 +116,7 @@
 	const finish = function() {
 		result = `<conversation id="${conversationID}">${result}</conversation>`;
 		saveXMLFile();
-		videoTweetIDs = null;
+		videoTweetIDs = [];
 		userProfileImage = null;
 		userProfileLink = null;
 		conversationJoinEntry = null;
@@ -129,7 +129,7 @@
 		hyperlinkContainer = null;
 		tweetContent = null;
 		tweetContainer = null;
-		tweets = null;
+		tweets = [];
 		itemsAsJson = null;
 		ajaxResponse = null;
 	};
@@ -155,7 +155,7 @@
 			});
 		}
 	};
-	const loadDirectMessages = function() {
+	const transformDMConversationHTML = function() {
 		$.ajax(conversationURL).done(function(response) {
 			ajaxResponse = JSON.parse(response);
 			if(ajaxResponse.min_entry_id != max_entry_id) {
@@ -226,12 +226,17 @@
 			if(ajaxResponse.max_entry_id != ajaxResponse.min_entry_id) {
 				max_entry_id = ajaxResponse.min_entry_id;
 				conversationURL = `${baseURL}&max_entry_id=${max_entry_id}`;
-				loadDirectMessages();
+				transformDMConversationHTML();
 			}
 			else
 				fixVideoURLs(videoTweetIDs);
 		});
 	};
-	loadDirectMessages();
-	const timer = setInterval(() => (ajaxResponse != null ? console.clear() : clearInterval(timer)), 15000);
+	return function(value) {
+		conversationID = value;
+		baseURL = `https://twitter.com/messages/with/conversation?id=${conversationID}`;
+		conversationURL = baseURL;
+		transformDMConversationHTML();
+		const timer = setInterval(() => (ajaxResponse != null ? console.clear() : clearInterval(timer)), 15000);
+	};
 })();
