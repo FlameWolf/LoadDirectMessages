@@ -3,7 +3,7 @@ Get an archive of all the messages from a Twitter DM conversation.
 ## How to use
 1. Open Twitter in a browser tab.
 2. Open the browser's developer console, copy-paste the contents of **LoadDirectMessages.js** into it, and press `Enter`.
-3. Type the following command into the developer console: `loadDirectMessages("<<CONVERSATION-ID")` where `<<CONVERSATION-ID>>` is the ID of the conversation that you want to archive. (See [this guide by @Mincka](https://github.com/Mincka/DMArchiver#how-to-get-a-conversation_id) to find out how to get the conversation ID.)
+3. Type the following command into the developer console: `loadDirectMessages("<<CONVERSATION-ID");` where `<<CONVERSATION-ID>>` is the ID of the conversation that you want to archive. (See [this guide by @Mincka](https://github.com/Mincka/DMArchiver#how-to-get-a-conversation_id) to find out how to get the conversation ID.)
 4. Press `Enter` and the script will start archiving the messages in your DM conversation.
 
 *(The script will stop executing when it gets to the very first message in the conversation. Each time the script reads a batch of messages, you will get an error message saying `SyntaxError: unexpected token: ':'` (or something else similar, depending on your browser) which can be ignored. It indicates that the script is working properly.)*
