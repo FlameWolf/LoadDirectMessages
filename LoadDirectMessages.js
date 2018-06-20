@@ -62,7 +62,7 @@ const loadDirectMessages = (function() {
 		});
 		[...element.querySelectorAll(".twitter-timeline-link")].map(function(value) {
 			timelineLinkURL = (value.getAttribute("data-expanded-url") || `https://${value.textContent}`);
-			value.replaceWith(`<a href="${timelineLinkURL}" target="_blank">${timelineLinkURL}</a>`);
+			value.replaceWith(`<a href="${timelineLinkURL}" target="_blank">${timelineLinkURL.replace(/^https?:\/\/(www\.)?/, EMPTY_STRING)}</a>`);
 		});
 		[...element.querySelectorAll(".twitter-atreply")].map(function(value) {
 			mentionLinkText = value.textContent;
