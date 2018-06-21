@@ -127,7 +127,7 @@
 						<xsl:text>https://twitter.com/</xsl:text>
 						<xsl:value-of select="sender/@handle"/>
 						<xsl:text>/status/</xsl:text>
-						<xsl:value-of select="@tweet-id"/>
+						<xsl:value-of select="@id"/>
 					</xsl:attribute>
 					<div class="tweet-header">
 						<xsl:apply-templates select="sender"/>
