@@ -7,7 +7,7 @@
 	</tweet>
 	<tweet id="983864063450400512" direction="0" timestamp="1501948854">
 		<sender id="3923320813" handle="bob" name="Bob"/>
-		<attachment type="tweet" tweet-id="988570804373692767">
+		<attachment type="tweet" id="988570804373692767">
 			<sender id="76656606" handle="carol" name="Carol"/>
 			<content>How do you find Will Smith in the snow?&#x0A;&#x0A;Look for the fresh prints!</content>
 		</attachment>
@@ -51,7 +51,7 @@
 	</tweet>
 	<tweet id="983864063450400873" direction="1" timestamp="1501949088">
 		<sender id="2650075210" handle="alice" name="Alice"/>
-		<attachment type="tweet" tweet-id="901104395202472723">
+		<attachment type="tweet" id="901104395202472723">
 			<sender id="295272321" handle="dan" name="Dan"/>
 			<content>My wife left me because I'm insecure and paranoid.&#x0A;&#x0A;&#x0A;Wait. Never mind. She was just getting the mail.</content>
 		</attachment>
