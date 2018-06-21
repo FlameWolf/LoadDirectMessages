@@ -204,7 +204,7 @@ const loadDirectMessages = (function() {
 						switch(attachmentType)
 						{
 							case "tweet":
-								attachmentXML = `<attachment type="${attachmentType}" tweet-id="${quotedTweetID}"><sender id="${quotedTweetSenderID}" handle="${quotedTweetSenderHandle}" name="${quotedTweetSenderName}"/><content>${quotedTweetHtml}</content></attachment>`;
+								attachmentXML = `<attachment type="${attachmentType}" id="${quotedTweetID}"><sender id="${quotedTweetSenderID}" handle="${quotedTweetSenderHandle}" name="${quotedTweetSenderName}"/><content>${quotedTweetHtml}</content></attachment>`;
 								break;
 							case "hyperlink":
 							case "sticker":
