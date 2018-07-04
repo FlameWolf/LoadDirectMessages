@@ -12,7 +12,7 @@ Get an archive of all the messages from a Twitter DM conversation.
 6. You can use **Transform-DM-Conversation-XML.xsl** to transform the output XML file into HTML format for presentation. See **Sample-DM-Conversation-XML.xml** for an example.
 ## Known issues
 1. If you have videos in your chat (not animated GIFs that Twitter converts to MP4 format, but any other kind of videos), the script will fail to load their URLs properly. This can be fixed in Chrome by following the below steps before running the script.
-* Install the [Disable Content-Security-Policy](https://chrome.google.com/webstore/detail/disable-content-security/ieelmcmcagommplceebfedjlakkhpden) extension.
-* Start the browser with the `--disable-web-security` and `--user-data-dir` command-line parameters.
-* Click on the grey extension icon ![CSP Enabled](https://raw.githubusercontent.com/PhilGrayson/chrome-csp-disable/master/images/icon38-off.png) to turn off CSP headers. The extension will display a red icon ![CSP Disabled](https://raw.githubusercontent.com/PhilGrayson/chrome-csp-disable/master/images/icon38-on.png) when CSP headers are disabled.
+- Install the [Disable Content-Security-Policy](https://chrome.google.com/webstore/detail/disable-content-security/ieelmcmcagommplceebfedjlakkhpden) extension.
+- Start the browser with the `--disable-web-security` and `--user-data-dir` command-line parameters.
+- Click on the grey extension icon ![CSP Enabled](https://raw.githubusercontent.com/PhilGrayson/chrome-csp-disable/master/images/icon38-off.png) to turn off CSP headers. The extension will display a red icon ![CSP Disabled](https://raw.githubusercontent.com/PhilGrayson/chrome-csp-disable/master/images/icon38-on.png) when CSP headers are disabled.
 2. Cannot retrieve full URLs for Twitter cards (`<attachment type="hyperlink" … />`). They will be displayed only as `t.co` links.
