@@ -2,25 +2,21 @@
 const loadDirectMessages = (function() {
 	const emptyString = new String();
 	let result = emptyString;
-	let maxEntryId = emptyString;
-	let ajaxResponse = null;
 	let conversationId = emptyString;
 	let baseURL = emptyString;
 	let conversationURL = emptyString;
+	let ajaxResponse = null;
+	let maxEntryId = emptyString;
 	let tweetContainer = null;
-	let users = {};
 	let tweetSenderId = emptyString;
 	let tweetSenderHandle = emptyString;
 	let tweetSenderAvatar = null;
 	let tweetTimestamp = emptyString;
 	let tweetContent = null;
-	let attachmentType = emptyString;
-	let attachmentURL = emptyString;
-	let attachmentXML = emptyString;
+	let tweetHtml = emptyString;
 	let hyperlinkContainer = null;
 	let imageContainer = null;
 	let videoContainer = null;
-	let tweetHtml = emptyString;
 	let quotedTweetContainer = null;
 	let quotedTweetId = emptyString;
 	let quotedTweetSenderId = emptyString;
@@ -29,15 +25,12 @@ const loadDirectMessages = (function() {
 	let quotedTweetSenderName = emptyString;
 	let quotedTweetContent = null;
 	let quotedTweetHtml = emptyString;
-	const terminator = "\n";
-	let hashtagLinkText = emptyString;
-	let timelineLinkURL = emptyString;
-	let mentionLinkText = emptyString;
-	let conversationEntryHtml = emptyString;
-	let conversationJoinEntry = null;
-	let userProfileLink = null;
-	let userProfileImage = null;
+	let attachmentType = emptyString;
+	let attachmentURL = emptyString;
+	let attachmentXML = emptyString;
 	let videoTweetIds = new Array();
+	let users = {};
+	const terminator = "\n";
 	(function() {
 		Element.prototype.replaceWith = function(html) {
 			this.insertAdjacentHTML("afterend", html);
@@ -49,42 +42,65 @@ const loadDirectMessages = (function() {
 			open.apply(this, arguments);
 		};
 	})();
+	const removeElement = function(value) {
+		value.remove();
+	};
 	const escapeHtml = function(unsafe) {
 		return unsafe.replace(/&/g, "&#x26;").replace(/</g, "&#x3C;").replace(/>/g, "&#x3E;").replace(/"/g, "&#x22;").replace(/'/g, "&#x27;");
 	};
-	const processHashtag = function(value) {
-		hashtagLinkText = value.textContent;
-		value.replaceWith(`<a class=\"hashtag\" href="https://twitter.com/hashtag/${hashtagLinkText.replace(/^#/, emptyString)}" target="_blank">${hashtagLinkText}</a>`);
-	};
-	const processHyperlink = function(value) {
-		timelineLinkURL = (value.getAttribute("data-expanded-url") || `https://${value.textContent}`);
-		value.replaceWith(`<a href="${timelineLinkURL}" target="_blank">${timelineLinkURL.replace(/^https?:\/\/(www\.)?/, emptyString)}</a>`);
-	};
-	const processMention = function(value) {
-		mentionLinkText = value.textContent;
-		value.replaceWith(`<a class="mention" href="https://twitter.com/${mentionLinkText.replace(/^@/, emptyString)}" target="_blank" data-user-id="${value.getAttribute("data-mentioned-user-id")}">${mentionLinkText}</a>`);
-	};
-	const processAvatar = function(value) {
-		userProfileLink = value.querySelector("[class$=\"user-profile-link\"]");
-		userProfileImage = value.querySelector(".DMAvatar-image");
-		conversationEntryHtml += `<a class="avatar" href="${userProfileLink.href}" title="${userProfileImage.title}" target="_blank" data-user-id="${userProfileLink.getAttribute("data-user-id")}"><img src="${userProfileImage.src.replace(/_200x200\.jpg$/, "_400x400.jpg")}"/></a>`;
-	};
-	const cleanUpHtml = function(element) {
-		[...element.querySelectorAll(".twitter-hashtag")].forEach(processHashtag);
-		[...element.querySelectorAll(".twitter-timeline-link")].forEach(processHyperlink);
-		[...element.querySelectorAll(".twitter-atreply")].forEach(processMention);
-		if(element.classList.contains("DMConversationEntry")) {
-			conversationEntryHtml = element.firstChild.textContent.trim();
-			conversationJoinEntry = element.querySelector(".DMConversationJoinEntry");
-			if(conversationJoinEntry != null) {
-				conversationEntryHtml += `<br/>${conversationJoinEntry.querySelector(".DMConversationJoinEntry-message").textContent.trim()}<br/><span class="members">`;
-				[...conversationJoinEntry.querySelectorAll(".DMConversationJoinEntry-avatar")].forEach(processAvatar);
-				conversationEntryHtml = `${conversationEntryHtml}</span>`;
+	const tweetFormatter = (function() {
+		let hashtagLinkText = emptyString;
+		let timelineLinkURL = emptyString;
+		let mentionLinkText = emptyString;
+		let conversationEntryHtml = emptyString;
+		let conversationJoinEntry = null;
+		let userProfileLink = null;
+		let userProfileImage = null;
+		const processHashtag = function(value) {
+			hashtagLinkText = value.textContent;
+			value.replaceWith(`<a class=\"hashtag\" href="https://twitter.com/hashtag/${hashtagLinkText.replace(/^#/, emptyString)}" target="_blank">${hashtagLinkText}</a>`);
+		};
+		const processHyperlink = function(value) {
+			timelineLinkURL = (value.getAttribute("data-expanded-url") || `https://${value.textContent}`);
+			value.replaceWith(`<a href="${timelineLinkURL}" target="_blank">${timelineLinkURL.replace(/^https?:\/\/(www\.)?/, emptyString)}</a>`);
+		};
+		const processMention = function(value) {
+			mentionLinkText = value.textContent;
+			value.replaceWith(`<a class="mention" href="https://twitter.com/${mentionLinkText.replace(/^@/, emptyString)}" target="_blank" data-user-id="${value.getAttribute("data-mentioned-user-id")}">${mentionLinkText}</a>`);
+		};
+		const processAvatar = function(value) {
+			userProfileLink = value.querySelector("[class$=\"user-profile-link\"]");
+			userProfileImage = value.querySelector(".DMAvatar-image");
+			conversationEntryHtml += `<a class="avatar" href="${userProfileLink.href}" title="${userProfileImage.title}" target="_blank" data-user-id="${userProfileLink.getAttribute("data-user-id")}"><img src="${userProfileImage.src.replace(/_200x200\.jpg$/, "_400x400.jpg")}"/></a>`;
+		};
+		return {
+			"cleanUpTweetHtml": function(element) {
+				[...element.querySelectorAll(".twitter-hashtag")].forEach(processHashtag);
+				[...element.querySelectorAll(".twitter-timeline-link")].forEach(processHyperlink);
+				[...element.querySelectorAll(".twitter-atreply")].forEach(processMention);
+				if(element.classList.contains("DMConversationEntry")) {
+					conversationEntryHtml = element.firstChild.textContent.trim();
+					conversationJoinEntry = element.querySelector(".DMConversationJoinEntry");
+					if(conversationJoinEntry != null) {
+						conversationEntryHtml += `<br/>${conversationJoinEntry.querySelector(".DMConversationJoinEntry-message").textContent.trim()}<br/><span class="members">`;
+						[...conversationJoinEntry.querySelectorAll(".DMConversationJoinEntry-avatar")].forEach(processAvatar);
+						conversationEntryHtml = `${conversationEntryHtml}</span>`;
+					}
+					return conversationEntryHtml;
+				}
+				return element.innerHTML.trim().replace(/&amp;/g, "&#x26;").replace(/&lt;/g, "&#x3C;").replace(/&gt;/g, "&#x3E;").replace(/&nbsp;/g, "&#xA0;").replace(/\n/g, "&#x0A;");
+			},
+			"resetVariables": function() {
+				userProfileImage = null;
+				userProfileLink = null;
+				conversationJoinEntry = null;
+				conversationEntryHtml = emptyString;
+				mentionLinkText = emptyString;
+				timelineLinkURL = emptyString;
+				hashtagLinkText = emptyString;
 			}
-			return conversationEntryHtml;
-		}
-		return element.innerHTML.trim().replace(/&amp;/g, "&#x26;").replace(/&lt;/g, "&#x3C;").replace(/&gt;/g, "&#x3E;").replace(/&nbsp;/g, "&#xA0;").replace(/\n/g, "&#x0A;");
-	};
+		};
+	})();
 	const getVideoURL = function(element, tweetId) {
 		if(element.classList.contains("PlayableMedia--gif"))
 			return element.querySelector(".PlayableMedia-player").style["background-image"].match(/url\("(.*?)"\)/)[1].replace(".jpg", ".mp4").replace("/dm_gif_preview/", "/dm_gif/").replace("//pbs.", "//video.");
@@ -93,98 +109,94 @@ const loadDirectMessages = (function() {
 			return `\${vid:${tweetId}}`;
 		}
 	};
-	const saveXMLFile = function() {
-		result = `<?xml version="1.0" encoding="UTF-8"?>\n${result}`;
-		let xmlFile = new Blob([result], { type: "text/xml" });
-		let anchorElement = document.createElement("a");
-		let anchorElementStyle = anchorElement.style;
-		anchorElement.href = URL.createObjectURL(xmlFile);
-		anchorElement.download = `DM-Conversation-${conversationId}.xml`;
-		anchorElementStyle.display = "none";
-		anchorElementStyle.visibility = "hidden";
-		anchorElementStyle.opacity = 0;
-		document.body.appendChild(anchorElement);
-		anchorElement.click();
-		setTimeout(function() {
-			URL.revokeObjectURL(anchorElement.href);
-			document.body.removeChild(anchorElement);
-			anchorElementStyle = null;
-			anchorElement = null;
-			xmlFile = null;
-			result = emptyString;
-		}, 0);
-	};
-	const transformJsonEntry = function([key, value]) {
-		return `${key}="${value}"`;
-	};
-	const generateUserXML = function([key, value]) {
-		return `<user id="${key}" ${Object.entries(value).map(transformJsonEntry).join(" ")}/>`;
-	};
-	const finish = function() {
-		const participantsXML = Object.entries(users).map(generateUserXML).join(terminator);
-		result = `<conversation id="${conversationId}">\n<participants>\n${participantsXML}\n</participants>\n<tweets>${result}</tweets>\n</conversation>`;
-		saveXMLFile();
-		videoTweetIds = new	Array();
-		userProfileImage = null;
-		userProfileLink = null;
-		conversationJoinEntry = null;
-		conversationEntryHtml = emptyString;
-		mentionLinkText = emptyString;
-		timelineLinkURL = emptyString;
-		hashtagLinkText = emptyString;
-		quotedTweetHtml = emptyString;
-		quotedTweetContent = null;
-		quotedTweetSenderName = emptyString;
-		quotedTweetSenderNameContainer = null;
-		quotedTweetSenderHandle = emptyString;
-		quotedTweetSenderId = emptyString;
-		quotedTweetId = emptyString;
-		quotedTweetContainer = null;
-		tweetHtml = emptyString;
-		videoContainer = null;
-		imageContainer = null;
-		hyperlinkContainer = null;
-		attachmentXML = emptyString;
-		attachmentURL = emptyString;
-		attachmentType = emptyString;
-		tweetContent = null;
-		tweetTimestamp = emptyString;
-		tweetSenderAvatar = null;
-		tweetSenderHandle = emptyString;
-		tweetSenderId = emptyString;
-		users = {};
-		tweetContainer = null;
-		conversationURL = emptyString;
-		baseURL = emptyString;
-		conversationId = emptyString;
-		ajaxResponse = null;
-		maxEntryId = emptyString;
-	};
-	const updateVideoURL = function(value, index, source) {
-		let xhr = new XMLHttpRequest();
-		xhr.open("GET", `https://mobile.twitter.com/messages/media/${value}`);
-		xhr.setRequestHeader("Accept", "text/html, application/xhtml+xml, application/xml; q=0.9, */*; q=0.8");
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.onreadystatechange = function() {
-			if(xhr.readyState == XMLHttpRequest.DONE) {
-				result = result.replace(new RegExp(`(<attachment type="video" url=")(\\\${vid:${value}})("/>)`), `$1${(xhr.status == 200 ? xhr.responseURL : xhr.requestURL)}$3`);
-				source.splice(source.indexOf(value), 1);
-				if(source.length == 0)
-					finish();
-				xhr = null;
-			}
+	const finish = (function() {
+		const generateUserXML = (function() {
+			const transformJsonEntry = function([key, value]) {
+				return `${key}="${value}"`;
+			};
+			return function([key, value]) {
+				return `<user id="${key}" ${Object.entries(value).map(transformJsonEntry).join(" ")}/>`;
+			};
+		})();
+		const saveXMLFile = function() {
+			result = `<?xml version="1.0" encoding="UTF-8"?>\n${result}`;
+			let xmlFile = new Blob([result], { type: "text/xml" });
+			let anchorElement = document.createElement("a");
+			let anchorElementStyle = anchorElement.style;
+			anchorElement.href = URL.createObjectURL(xmlFile);
+			anchorElement.download = `DM-Conversation-${conversationId}.xml`;
+			anchorElementStyle.display = "none";
+			anchorElementStyle.visibility = "hidden";
+			anchorElementStyle.opacity = 0;
+			document.body.appendChild(anchorElement);
+			anchorElement.click();
+			setTimeout(function() {
+				URL.revokeObjectURL(anchorElement.href);
+				document.body.removeChild(anchorElement);
+				anchorElementStyle = null;
+				anchorElement = null;
+				xmlFile = null;
+				result = emptyString;
+			}, 0);
 		};
-		xhr.send();
-	};
-	const fixVideoURLs = function(items) {
-		if(items.length == 0)
-			finish();
-		else
-			items.forEach(updateVideoURL);
-	};
-	const removeElement = function(value) {
-		value.remove();
-	};
+		return function() {
+			result = `<conversation id="${conversationId}">\n<participants>\n${Object.entries(users).map(generateUserXML).join(terminator)}\n</participants>\n<tweets>${result}</tweets>\n</conversation>`;
+			saveXMLFile();
+			tweetFormatter.resetVariables();
+			users = {};
+			videoTweetIds = new	Array();
+			attachmentXML = emptyString;
+			attachmentURL = emptyString;
+			attachmentType = emptyString;
+			quotedTweetHtml = emptyString;
+			quotedTweetContent = null;
+			quotedTweetSenderName = emptyString;
+			quotedTweetSenderNameContainer = null;
+			quotedTweetSenderHandle = emptyString;
+			quotedTweetSenderId = emptyString;
+			quotedTweetId = emptyString;
+			quotedTweetContainer = null;
+			videoContainer = null;
+			imageContainer = null;
+			hyperlinkContainer = null;
+			tweetHtml = emptyString;
+			tweetContent = null;
+			tweetTimestamp = emptyString;
+			tweetSenderAvatar = null;
+			tweetSenderHandle = emptyString;
+			tweetSenderId = emptyString;
+			tweetContainer = null;
+			maxEntryId = emptyString;
+			ajaxResponse = null;
+			conversationURL = emptyString;
+			baseURL = emptyString;
+			conversationId = emptyString;
+		};
+	})();
+	const fixVideoURLs = (function() {
+		const updateVideoURL = function(value, index, source) {
+			let xhr = new XMLHttpRequest();
+			xhr.open("GET", `https://mobile.twitter.com/messages/media/${value}`);
+			xhr.setRequestHeader("Accept", "text/html, application/xhtml+xml, application/xml; q=0.9, */*; q=0.8");
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == XMLHttpRequest.DONE) {
+					result = result.replace(new RegExp(`(<attachment type="video" url=")(\\\${vid:${value}})("/>)`), `$1${(xhr.status == 200 ? xhr.responseURL : xhr.requestURL)}$3`);
+					source.splice(source.indexOf(value), 1);
+					if(source.length == 0)
+						finish();
+					xhr = null;
+				}
+			};
+			xhr.send();
+		};
+		return function(items) {
+			if(items.length == 0)
+				finish();
+			else
+				items.forEach(updateVideoURL);
+		};
+	})();
 	const processTweet = function([key, value]) {
 		value = value.replace(/<img\s+.*?class="\s*Emoji\s*.*?".*?alt="(.*?)".*?>/g, "$1");
 		tweetContainer = $.parseHTML(value)[0];
@@ -194,11 +206,11 @@ const loadDirectMessages = (function() {
 			tweetSenderAvatar = tweetContainer.querySelector(".DMAvatar-image");
 			tweetTimestamp = tweetContainer.querySelector("._timestamp").getAttribute("data-time");
 			tweetContent = tweetContainer.querySelector(".DirectMessage-text .tweet-text");
+			quotedTweetContainer = tweetContainer.querySelector(".QuoteTweet");
 			hyperlinkContainer = tweetContainer.querySelector("[data-card-url]");
 			imageContainer = tweetContainer.querySelector(".dm-attached-media");
 			videoContainer = tweetContainer.querySelector(".PlayableMedia");
-			quotedTweetContainer = tweetContainer.querySelector(".QuoteTweet");
-			tweetHtml = (tweetContent == null ? emptyString : cleanUpHtml(tweetContent));
+			tweetHtml = (tweetContent == null ? emptyString : tweetFormatter.cleanUpTweetHtml(tweetContent));
 			if(quotedTweetContainer != null) {
 				attachmentType = "tweet";
 				quotedTweetId = quotedTweetContainer.querySelector(".QuoteTweet-innerContainer").getAttribute("data-item-id");
@@ -208,7 +220,7 @@ const loadDirectMessages = (function() {
 				[...quotedTweetSenderNameContainer.querySelectorAll(".Emoji")].forEach(removeElement);
 				quotedTweetSenderName = escapeHtml(quotedTweetSenderNameContainer.textContent);
 				quotedTweetContent = quotedTweetContainer.querySelector(".QuoteTweet-text");
-				quotedTweetHtml = (quotedTweetContent == null ? emptyString : cleanUpHtml(quotedTweetContent));
+				quotedTweetHtml = (quotedTweetContent == null ? emptyString : tweetFormatter.cleanUpTweetHtml(quotedTweetContent));
 			}
 			else if(hyperlinkContainer != null) {
 				attachmentType = "hyperlink";
@@ -244,7 +256,7 @@ const loadDirectMessages = (function() {
 			return `<tweet id="${key}" timestamp="${tweetTimestamp}" sender="${tweetSenderId}">${attachmentXML}${tweetHtml != emptyString ? `<content>${tweetHtml}</content>` : emptyString}</tweet>`;
 		}
 		else
-			return `<tweet id="${key}"><content>${cleanUpHtml(tweetContainer)}</content></tweet>`;
+			return `<tweet id="${key}"><content>${tweetFormatter.cleanUpTweetHtml(tweetContainer)}</content></tweet>`;
 	};
 	const transformDMConversationHTML = function() {
 		$.ajax(conversationURL).done(function(response) {
