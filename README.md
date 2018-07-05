@@ -15,4 +15,4 @@ Get an archive of all the messages from a Twitter DM conversation.
    - Install the [Disable Content-Security-Policy](https://chrome.google.com/webstore/detail/disable-content-security/ieelmcmcagommplceebfedjlakkhpden) extension.
    - Start the browser with the `--disable-web-security` and `--user-data-dir` command-line parameters.
    - Click on the grey extension icon ![CSP Enabled](https://raw.githubusercontent.com/PhilGrayson/chrome-csp-disable/master/images/icon38-off.png) to turn off CSP headers. The extension will display a red icon ![CSP Disabled](https://raw.githubusercontent.com/PhilGrayson/chrome-csp-disable/master/images/icon38-on.png) when CSP headers are disabled.
-2. The script cannot retrieve expanded URLs for Twitter cards (`<attachment type="hyperlink" … />`). They will be displayed as shortened `t.co` URLs.
+2. The script cannot retrieve expanded URLs for Twitter cards (`<attachment type="hyperlink" … />`). They will be displayed as their shortened `t.co` URLs.
