@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="XSL/Transform-DM-Conversation-XML.xsl"?>
-<conversation id="2650075210-3923320813">
+<conversation id="2650075210-3923320813" self="3923320813" basePath="Sample-DM-Conversation-XML-Files/">
 	<participants>
 		<user id="2650075210" handle="alice" name="Alice" avatar="https://pbs.twimg.com/profile_images/848282412169777152/I5wnXKAd_400x400.jpg"/>
-		<user id="3923320813" handle="bob" name="Bob" avatar="https://pbs.twimg.com/profile_images/848199565530595328/pj-7jTNI_400x400.jpg" self="true"/>
+		<user id="3923320813" handle="bob" name="Bob" avatar="https://pbs.twimg.com/profile_images/848199565530595328/pj-7jTNI_400x400.jpg"/>
 	</participants>
-	<tweets>
+	<entries>
 		<tweet id="983864063450400502" timestamp="1501948774" sender="2650075210">
 			<content>Hi!</content>
 		</tweet>
@@ -20,7 +20,7 @@
 			<attachment type="sticker" url="https://ton.twimg.com/stickers/stickers/22698_raw.png"/>
 		</tweet>
 		<tweet id="983864063450400584" timestamp="1501948919" sender="3923320813">
-			<attachment type="hyperlink" url="https://t.co/8nqB1UDRUs"/>
+			<attachment type="card" layout="row" url="https://www.youtube.com/watch?v=ZArOgSvQ5xg" preview="https://pbs.twimg.com/card_img/1021919384183422976/Aqd3UDzj?format=jpg&#x26;name=280x280" header="Meri Bheegi Bheegi Si Palkon Pe - Anamika (1973) 1080p HD" blurb="Movie: Anamika (1973) Song: Meri Bheegi Bheegi Si Palkon Pe Cast: Sanjiv Kumar, Jaya Bhaduri Singer: Kishore Kumar" footer="youtube.com"/>
 			<content><a class="hashtag" href="https://twitter.com/hashtag/NowPlaying" target="_blank">#NowPlaying</a></content>
 		</tweet>
 		<tweet id="983864063450400598" timestamp="1501948937" sender="2650075210">
@@ -35,7 +35,7 @@
 			<content>Awwwwwwwwww. 😍😚</content>
 		</tweet>
 		<tweet id="983864063450400840" timestamp="1501949051" sender="3923320813">
-			<attachment type="hyperlink" url="https://t.co/VFgWZnZYOp"/>
+			<attachment type="card" layout="row" url="https://www.reddit.com/r/Jokes/comments/8jvake/hey_baby_are_you_a_gpu" preview="https://pbs.twimg.com/card_img/1023326375518920704/Lc9LMw4v?format=png&#x26;name=144x144_2" header="Hey baby, are you a GPU? • r/Jokes" blurb="Cause I wanna make you mine." footer="reddit.com"/>
 		</tweet>
 		<tweet id="983864063450400845" timestamp="1501949069" sender="2650075210">
 			<content>Ha ha. 😂</content>
@@ -57,7 +57,7 @@
 			<content>Ha ha. I wonder how he comes up with stuff like this!</content>
 		</tweet>
 		<tweet id="983864063450400924" timestamp="1501949157" sender="2650075210">
-			<attachment type="hyperlink" url="https://t.co/TV2cv6V0zP"/>
+			<attachment type="card" layout="row" url="https://www.reddit.com/r/Jokes" preview="https://pbs.twimg.com/card_img/1023326375518920704/Lc9LMw4v?format=png&#x26;name=144x144_2" header="Jokes: Get Your Funny On! • r/Jokes" blurb="The funniest sub on reddit. Hundreds of jokes posted each day, and some of them aren&#x27;t even reposts!" footer="reddit.com"/>
 		</tweet>
 		<tweet id="983864063450400937" timestamp="1501949171" sender="2650075210">
 			<content>I think he steals from them here. 😆</content>
@@ -65,5 +65,5 @@
 		<tweet id="983864063450400988" timestamp="1501949195" sender="3923320813">
 			<attachment type="image" url="https://pbs.twimg.com/media/Df_0TqwX0AIJoiv.jpg"/>
 		</tweet>
-	</tweets>
+	</entries>
 </conversation>
