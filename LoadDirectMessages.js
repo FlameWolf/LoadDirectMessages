@@ -317,7 +317,16 @@ const loadDirectMessages = (function() {
 			lastMessageTimeContainer.textContent = (new Date(parseInt(tweetTimestamp) * 1000)).toString();
 		};
 		return function() {
-			fetch(conversationURL, { "credentials": "include", "headers": { "X-Requested-With": "XMLHttpRequest" } }).then(response => response.json().then(function(data) {
+			fetch(conversationURL, {
+				"credentials": "include",
+				"headers": {
+					"Accept": "application/json, text/javascript, */*; q=0.01",
+					"Accept-Encoding": "gzip, deflate, br",
+					"Referer": "https://twitter.com/?lang=en",
+					"X-Requested-With": "XMLHttpRequest",
+					"X-Twitter-Active-User": "yes"
+				}
+			}).then(response => response.json().then(function(data) {
 				result = `${Object.entries(data.items).map(processTweet).join("\n")}\n${result}`;
 				if(data.has_more && !stopped) {
 					conversationURL = `${baseURL}&max_entry_id=${data.min_entry_id}`;
