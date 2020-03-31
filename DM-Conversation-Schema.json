@@ -1,0 +1,82 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$defs": {
+		"cardLayout": {
+			"type": "string",
+			"enum": ["row", "column"]
+		},
+		"attachmentType": {
+			"type": "string",
+			"enum": ["sticker", "image", "video", "card", "tweet"]
+		},
+		"user": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "integer" },
+				"handle": { "type": "string" },
+				"name": { "type": "string" },
+				"avatar": { "type": "string", "format": "uri" }
+			},
+			"required": ["id", "handle", "name", "avatar"]
+		},
+		"sender": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "integer" },
+				"handle": { "type": "string" },
+				"name": { "type": "string" }
+			},
+			"required": ["id", "handle", "name"]
+		},
+		"attachment": {
+			"type": "object",
+			"properties": {
+				"sender": { "$ref": "#/$defs/sender" },
+				"content": { "type": "string" },
+				"type": { "$ref": "#/$defs/attachmentType" },
+				"id": { "type": "integer" },
+				"url": { "type": "string", "format": "uri" },
+				"layout": { "$ref": "#/$defs/cardLayout" },
+				"preview": { "type": "string", "format": "uri" },
+				"header": { "type": "string" },
+				"blurb": { "type": "string" },
+				"footer": { "type": "string" }
+			},
+			"required": ["type"]
+		},
+		"tweet": {
+			"type": "object",
+			"properties": {
+				"attachment": { "$ref": "#/$defs/attachment" },
+				"content": { "type": "string" },
+				"id": { "type": "integer" },
+				"timestamp": { "type": "integer" },
+				"sender": { "type": "integer" }
+			},
+			"required": ["id", "timestamp", "sender"]
+		}
+	},
+	"type": "object",
+	"properties": {
+		"id": { "type": "string" },
+		"self": { "type": "integer" },
+		"basePath": { "type": "string" },
+		"conversation": {
+			"type": "object",
+			"properties": {
+				"participants": {
+					"type": "array",
+					"items": { "$ref": "#/$defs/user" },
+					"minItems": 1,
+					"maxItems": 2
+				},
+				"entries": {
+					"type": "array",
+					"items": { "$ref": "#/$defs/tweet" }
+				}
+			},
+			"required": ["participants", "entries"]
+		}
+	},
+	"required": ["id", "self", "basePath"]
+}
