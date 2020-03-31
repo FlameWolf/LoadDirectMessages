@@ -323,6 +323,7 @@ const loadDirectMessages = (function() {
 					"Accept": "application/json, text/javascript, */*; q=0.01",
 					"Accept-Encoding": "gzip, deflate, br",
 					"Referer": "https://twitter.com/?lang=en",
+					"User-Agent": navigator.userAgent,
 					"X-Requested-With": "XMLHttpRequest",
 					"X-Twitter-Active-User": "yes"
 				}
