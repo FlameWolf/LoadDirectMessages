@@ -282,7 +282,7 @@ const loadDirectMessages = (function() {
 				if(attachmentType == "sticker")
 					attachmentURL = imageContainer.querySelector("img").src;
 				else {
-					attachmentURL = `https://mobile.twitter.com/messages/media/${key}`;
+					attachmentURL = `https://twitter.com/messages/media/${key}`;
 					mediaURLs.push(attachmentURL);
 				}
 			}

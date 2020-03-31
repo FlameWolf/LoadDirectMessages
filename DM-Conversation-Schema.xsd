@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:simpleType name="cardLayout">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="row"/>
+			<xs:enumeration value="column"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="attachmentType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sticker"/>
+			<xs:enumeration value="image"/>
+			<xs:enumeration value="video"/>
+			<xs:enumeration value="card"/>
+			<xs:enumeration value="tweet"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="conversation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="participants">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="2" name="user">
+								<xs:complexType>
+									<xs:attribute name="id" type="xs:unsignedLong" use="required"/>
+									<xs:attribute name="handle" type="xs:string" use="required"/>
+									<xs:attribute name="name" type="xs:string" use="required"/>
+									<xs:attribute name="avatar" type="xs:anyURI" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="entries">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="unbounded" name="tweet">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element minOccurs="0" maxOccurs="1" name="attachment">
+											<xs:complexType>
+												<xs:sequence minOccurs="0" maxOccurs="1">
+													<xs:element name="sender">
+														<xs:complexType>
+															<xs:attribute name="id" type="xs:unsignedLong" use="required"/>
+															<xs:attribute name="handle" type="xs:string" use="required"/>
+															<xs:attribute name="name" type="xs:string" use="required"/>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="content" type="xs:string"/>
+												</xs:sequence>
+												<xs:attribute name="type" type="attachmentType" use="required"/>
+												<xs:attribute name="id" type="xs:unsignedLong" use="optional"/>
+												<xs:attribute name="url" type="xs:anyURI" use="optional"/>
+												<xs:attribute name="layout" type="cardLayout" use="optional"/>
+												<xs:attribute name="preview" type="xs:anyURI" use="optional"/>
+												<xs:attribute name="header" type="xs:string" use="optional"/>
+												<xs:attribute name="blurb" type="xs:string" use="optional"/>
+												<xs:attribute name="footer" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element minOccurs="0" maxOccurs="1" name="content">
+											<xs:complexType mixed="true">
+												<xs:sequence>
+													<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="id" type="xs:unsignedLong" use="required"/>
+									<xs:attribute name="timestamp" type="xs:unsignedLong" use="required"/>
+									<xs:attribute name="sender" type="xs:unsignedLong" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required"/>
+			<xs:attribute name="self" type="xs:unsignedLong" use="required"/>
+			<xs:attribute name="basePath" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

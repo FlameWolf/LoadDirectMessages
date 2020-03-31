@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="XSL/Transform-DM-Conversation-XML.xsl"?>
-<conversation id="2650075210-3923320813" self="3923320813" basePath="Sample-DM-Conversation-XML-Files/">
+<?xml-stylesheet type="text/xsl" href="Transform-DM-Conversation-XML.xsl"?>
+<conversation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="DM-Conversation-Schema.xsd" id="2650075210-3923320813" self="3923320813" basePath="Sample-DM-Conversation-XML-Files/">
 	<participants>
 		<user id="2650075210" handle="alice" name="Alice" avatar="https://pbs.twimg.com/profile_images/848282412169777152/I5wnXKAd_400x400.jpg"/>
 		<user id="3923320813" handle="bob" name="Bob" avatar="https://pbs.twimg.com/profile_images/848199565530595328/pj-7jTNI_400x400.jpg"/>
