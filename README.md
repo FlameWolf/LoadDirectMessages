@@ -15,7 +15,7 @@ Once you have disabled CORS headers, follow the below steps to execute the scrip
 1. Open Twitter in a browser tab.
 2. Navigate to the **Messages** tab, and click on the conversation that you want to archive. Your browser's URL bar will show `https://twitter.com/messages/CONVERSATION_ID`. Note down the string that appears at the place of `CONVERSATION_ID`. This is the ID of the conversation. We will use it to fetch data from the server.
 3. Open the browser's developer console, copy-paste the contents of **LoadDirectMessages.js** into it, and press `Enter`.
-4. Type the following command into the developer console: `loadDirectMessages("CONVERSATION_ID")` (replace `CONVERSATION_ID` with the conversation ID mentioned in step #1).
+4. Type the following command into the developer console: `loadDirectMessages("CONVERSATION_ID")`. Replace `CONVERSATION_ID` with the conversation ID from step #2.
 5. Press `Enter` and the script will start archiving the messages in your DM conversation. A status bar above the console will display the date and time of the last message archived. Press **Pause** to pause the script. Press **Stop** to stop the script prematurely and save the partial output file.
 
    > Unless you press **Stop**, the script will continue executing until it reaches the very first message in the conversation. Do not switch to another tab or minimise the browser window while the script is running, as it may cause the browser to pause the script.
