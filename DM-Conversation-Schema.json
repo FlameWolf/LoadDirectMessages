@@ -20,21 +20,12 @@
 					"format": "uri"
 				}
 			},
-			"required": ["id", "handle", "name", "avatar"]
-		},
-		"sender": {
-			"type": "object",
-			"properties": {
-				"id": { "type": "string" },
-				"handle": { "type": "string" },
-				"name": { "type": "string" }
-			},
 			"required": ["id", "handle", "name"]
 		},
 		"attachment": {
 			"type": "object",
 			"properties": {
-				"sender": { "$ref": "#/$defs/sender" },
+				"sender": { "$ref": "#/$defs/user" },
 				"content": { "type": "string" },
 				"type": { "$ref": "#/$defs/attachmentType" },
 				"id": { "type": "string" },

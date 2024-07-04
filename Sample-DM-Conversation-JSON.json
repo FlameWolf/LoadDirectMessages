@@ -1,0 +1,184 @@
+{
+	"conversation": {
+		"id": "2650075210-3923320813",
+		"self": "3923320813",
+		"basePath": "Sample-DM-Conversation-XML-Files/",
+		"participants": [
+			{
+				"id": "2650075210",
+				"handle": "alice",
+				"name": "Alice",
+				"avatar": "https://pbs.twimg.com/profile_images/848282412169777152/I5wnXKAd_400x400.jpg"
+			},
+			{
+				"id": "3923320813",
+				"handle": "bob",
+				"name": "Bob",
+				"avatar": "https://pbs.twimg.com/profile_images/848199565530595328/pj-7jTNI_400x400.jpg"
+			}
+		],
+		"entries": [
+			{
+				"content": "Hi!",
+				"id": "983864063450400502",
+				"timestamp": 1501948774,
+				"sender": "2650075210"
+			},
+			{
+				"attachment": {
+					"sender": {
+						"id": "76656606",
+						"handle": "carol",
+						"name": "Carol"
+					},
+					"content": "How do you find Will Smith in the snow?\n\nLook for the fresh prints!",
+					"type": "tweet",
+					"id": "988570804373692767"
+				},
+				"content": "Oh hey. Did you see Carol's tweet?",
+				"id": "983864063450400512",
+				"timestamp": 1501948854,
+				"sender": "3923320813"
+			},
+			{
+				"attachment": {
+					"type": "sticker",
+					"url": "https://ton.twimg.com/stickers/stickers/22698_raw.png"
+				},
+				"id": "983864063450400517",
+				"timestamp": 1501948888,
+				"sender": "2650075210"
+			},
+			{
+				"attachment": {
+					"type": "card",
+					"layout": "row",
+					"url": "https://www.youtube.com/watch?v=ZArOgSvQ5xg",
+					"preview": "https://pbs.twimg.com/card_img/1021919384183422976/Aqd3UDzj?format=jpg&name=280x280",
+					"header": "Meri Bheegi Bheegi Si Palkon Pe - Anamika (1973) 1080p HD",
+					"blurb": "Movie: Anamika (1973) Song: Meri Bheegi Bheegi Si Palkon Pe Cast: Sanjiv Kumar, Jaya Bhaduri Singer: Kishore Kumar",
+					"footer": "youtube.com"
+				},
+				"content": "<a class=\"hashtag\" href=\"https://twitter.com/hashtag/NowPlaying\" target=\"_blank\">#NowPlaying</a>",
+				"id": "983864063450400584",
+				"timestamp": 1501948919,
+				"sender": "3923320813"
+			},
+			{
+				"attachment": {
+					"type": "video",
+					"url": "https://video.twimg.com/dm_gif/998848005070442496/kwZzw9g3u8sudLgVaT_sQyTOABTPJb1efqWX6e_VydEEPLLT1I.mp4"
+				},
+				"content": "I love the song! 😌",
+				"id": "983864063450400598",
+				"timestamp": 1501948937,
+				"sender": "2650075210"
+			},
+			{
+				"attachment": {
+					"type": "image",
+					"url": "https://pbs.twimg.com/media/DYyEuENWsAAOi_g.jpg"
+				},
+				"content": "Cute puppy.",
+				"id": "983864063450400650",
+				"timestamp": 1501948983,
+				"sender": "3923320813"
+			},
+			{
+				"content": "Awwwwwwwwww. 😍😚",
+				"id": "983864063450400821",
+				"timestamp": 1501949005,
+				"sender": "2650075210"
+			},
+			{
+				"attachment": {
+					"type": "card",
+					"layout": "row",
+					"url": "https://www.reddit.com/r/Jokes/comments/8jvake/hey_baby_are_you_a_gpu",
+					"preview": "https://pbs.twimg.com/card_img/1023326375518920704/Lc9LMw4v?format=png&name=144x144_2",
+					"header": "Hey baby, are you a GPU? • r/Jokes",
+					"blurb": "Cause I wanna make you mine.",
+					"footer": "reddit.com"
+				},
+				"id": "983864063450400840",
+				"timestamp": 1501949051,
+				"sender": "3923320813"
+			},
+			{
+				"content": "Ha ha. 😂",
+				"id": "983864063450400845",
+				"timestamp": 1501949069,
+				"sender": "2650075210"
+			},
+			{
+				"attachment": {
+					"type": "video",
+					"url": "https://video.twimg.com/dm_video/1001781861067079680/vid/640x360/Cc25f3M8mUtntZWdqG3uvcIcolScEHwnUyb2dWQJWB8.mp4"
+				},
+				"content": "<a class=\"hashtag\" href=\"https://twitter.com/hashtag/OddlySatisfying\" target=\"_blank\">#OddlySatisfying</a>",
+				"id": "983864063450400864",
+				"timestamp": 1501949080,
+				"sender": "3923320813"
+			},
+			{
+				"attachment": {
+					"sender": {
+						"id": "295272321",
+						"handle": "dan",
+						"name": "Dan"
+					},
+					"content": "My wife left me because I'm insecure and paranoid.\n\n\nWait. Never mind. She was just getting the mail.",
+					"type": "tweet",
+					"id": "901104395202472723"
+				},
+				"id": "983864063450400873",
+				"timestamp": 1501949088,
+				"sender": "2650075210"
+			},
+			{
+				"attachment": {
+					"type": "sticker",
+					"url": "https://ton.twimg.com/stickers/stickers/10004_raw.png"
+				},
+				"id": "983864063450400898",
+				"timestamp": 1501949125,
+				"sender": "3923320813"
+			},
+			{
+				"content": "Ha ha. I wonder how he comes up with stuff like this!",
+				"id": "983864063450400911",
+				"timestamp": 1501949142,
+				"sender": "3923320813"
+			},
+			{
+				"attachment": {
+					"type": "card",
+					"layout": "row",
+					"url": "https://www.reddit.com/r/Jokes",
+					"preview": "https://pbs.twimg.com/card_img/1023326375518920704/Lc9LMw4v?format=png&name=144x144_2",
+					"header": "Jokes: Get Your Funny On! • r/Jokes",
+					"blurb": "The funniest sub on reddit. Hundreds of jokes posted each day, and some of them aren't even reposts!",
+					"footer": "reddit.com"
+				},
+				"id": "983864063450400924",
+				"timestamp": 1501949157,
+				"sender": "2650075210"
+			},
+			{
+				"content": "I think he steals from them here. 😆",
+				"id": "983864063450400937",
+				"timestamp": 1501949171,
+				"sender": "2650075210"
+			},
+			{
+				"attachment": {
+					"type": "image",
+					"url": "https://pbs.twimg.com/media/Df_0TqwX0AIJoiv.jpg"
+				},
+				"id": "983864063450400988",
+				"timestamp": 1501949195,
+				"sender": "3923320813"
+			}
+		]
+	}
+}

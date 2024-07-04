@@ -15,20 +15,19 @@
 			<xs:enumeration value="tweet"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="user">
+		<xs:attribute name="id" type="xs:string" use="required"/>
+		<xs:attribute name="handle" type="xs:string" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="avatar" type="xs:anyURI" use="optional"/>
+	</xs:complexType>
 	<xs:element name="conversation">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="participants">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element minOccurs="1" maxOccurs="2" name="user">
-								<xs:complexType>
-									<xs:attribute name="id" type="xs:string" use="required"/>
-									<xs:attribute name="handle" type="xs:string" use="required"/>
-									<xs:attribute name="name" type="xs:string" use="required"/>
-									<xs:attribute name="avatar" type="xs:anyURI" use="required"/>
-								</xs:complexType>
-							</xs:element>
+							<xs:element minOccurs="1" maxOccurs="2" name="user" type="user"/>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -41,13 +40,7 @@
 										<xs:element minOccurs="0" maxOccurs="1" name="attachment">
 											<xs:complexType>
 												<xs:sequence minOccurs="0" maxOccurs="1">
-													<xs:element name="sender">
-														<xs:complexType>
-															<xs:attribute name="id" type="xs:string" use="required"/>
-															<xs:attribute name="handle" type="xs:string" use="required"/>
-															<xs:attribute name="name" type="xs:string" use="required"/>
-														</xs:complexType>
-													</xs:element>
+													<xs:element name="sender" type="user"/>
 													<xs:element name="content" type="xs:string"/>
 												</xs:sequence>
 												<xs:attribute name="type" type="attachmentType" use="required"/>
